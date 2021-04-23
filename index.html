@@ -2,19 +2,31 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <meta name="vviewport" content="width=device-width">
+        <!-- <meta name="viewport" content="width=device-width,user-scalable=no"> -->
+        <meta name="viewport" content="width=device-width">
         <title>ブロック崩しゲーム</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="container">
+        <div class="game container">
             <h1>ブロック崩し</h1>
             <div class="back" id="bk">
                 <h2 class="text" id="txt">TEXT</h2>
                 <button class="button" id="btn" type="button">START</button>
                 <button class="fas fa-home home" id="home"></button>
+                <canvas class="canvas" id="canvas"></canvas>
             </div>
+        </div>
+        <div class="touchswitch container" id="toucharea">
+            <button class="touch" id="left" type="button">
+                <span class="fas fa-chevron-left arrow"></span>
+                <span class="fas fa-chevron-left arrow"></span>
+            </button>
+            <button class="touch" id="right" type="button">
+                <span class="fas fa-chevron-right arrow"></span>
+                <span class="fas fa-chevron-right arrow"></span>
+            </button>
         </div>
         <script src="index.js"></script>
     </body>

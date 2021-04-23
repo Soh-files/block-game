@@ -4,26 +4,25 @@ const $back = document.getElementById('bk');
 const $text = document.getElementById('txt');
 const $button = document.getElementById('btn');
 const $home = document.getElementById('home');
+const $touchswitch = document.getElementById('toucharea');
+const $leftswitch = document.getElementById('left');
+const $rightswitch = document.getElementById('right');
 
 let blockTotal = 0;
 let blockCount = 0;
 
 // キャンバスの作成
-const canvas = document.createElement('canvas');
+const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-canvas.setAttribute('style', 'background-color: #FFF');
-canvas.width = 500;
-canvas.height = 500;
 
-$back.appendChild(canvas);
 
 // 要素の作成
 const ball = {
     x: null,
     y: null,
-    width: 5,
-    height: 5,
-    speed: 4,
+    width: canvas.width / 100,
+    height: canvas.height / 100,
+    speed: 1.3,
     dx: null,
     dy: null,
 
@@ -47,7 +46,7 @@ const paddle = {
     x: null,
     y: null,
     width: canvas.width / 7,
-    height: 10,
+    height: canvas.height / 50,
     speed: 0,
 
     update: function() {
@@ -66,7 +65,7 @@ const paddle = {
 
 const block = {
     width: null,
-    height: 20,
+    height: canvas.height / 25,
     data: [],
 
     update: function () {
@@ -78,6 +77,7 @@ const block = {
 }
 
 const level = [
+    [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
     [1,1,1,1,1,1,1,1,1,1],
     [1,1,1,1,1,1,1,1,1,1],
@@ -113,25 +113,27 @@ const startGame = () => {
 const init = () => {
 
     canvas.setAttribute('style', 'background-color: #CCEBED');
+    $leftswitch.style.display = 'block';
+    $rightswitch.style.display = 'block';
 
     // パドルの初期位置を指定
-    paddle.x = canvas.width / 2 - paddle.width / 2;
-    paddle.y = canvas.height - 40;
+    paddle.x = ( canvas.width / 2 - paddle.width / 2 ) + 0.5;
+    paddle.y = ( canvas.height - 10 ) + 0.5;
 
     // ボールの初期位置、スピードを指定
-    ball.x = canvas.width / 2;
-    ball.y = canvas.height / 2 - 50;
+    ball.x = canvas.width / 2 + 0.5;
+    ball.y = canvas.height / 2 + 0.5;
     ball.dx = ball.speed;
     ball.dy = ball.speed;
 
     // ブロックの位置を指定
-    block.width = canvas.width / level[0].length;
+    block.width = canvas.width / level[0].length - 0.05;
     for (let i=0; i < level.length; i++) {
         for (let j=0; j < level[i].length; j++) {
             if ( level[i][j] ) {
                 block.data.push( {
-                    x: block.width * j,
-                    y: block.height * i,
+                    x: block.width * j + 0.5,
+                    y: block.height * i + 0.5,
                     width: block.width,
                     height: block.height
                 })
@@ -207,6 +209,8 @@ const overGame = () => {
     $button.style.display = 'block';
     $button.textContent = 'RETRY';
     $home.style.display = 'block';
+    $leftswitch.style.display = 'none';
+    $rightswitch.style.display = 'none';
 }
 
 // ゲームクリア時の処理
@@ -222,6 +226,8 @@ const clearGame = () => {
     $button.style.display = 'block';
     $button.textContent = 'RETRY';
     $home.style.display = 'block';
+    $leftswitch.style.display = 'none';
+    $rightswitch.style.display = 'none';
 }
 
 const blockGame = () => {
@@ -236,10 +242,10 @@ const blockGame = () => {
 // キーボードを操作したときの処理
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') { 
-        paddle.speed = -7;
+        paddle.speed = -5;
     }
     if (e.key === 'ArrowRight') {
-        paddle.speed = 7;
+        paddle.speed = 5;
     }
 } );
 
@@ -248,14 +254,44 @@ document.addEventListener('keyup', () => {
 } );
 
 // クリックしたときの処理
+// ゲームスタート、リスタート処理
 $button.addEventListener('click', func = () => {
     startGame();
 });
 
-
 $home.addEventListener('click', () => {
     initScreen();
 });
+
+// canvas下のスイッチでのパドル操作用
+$leftswitch.addEventListener('mousedown', () => {
+    paddle.speed = -5;
+});
+$leftswitch.addEventListener('mouseup', () => {
+    paddle.speed = 0;
+});
+
+$rightswitch.addEventListener('mousedown', () => {
+    paddle.speed = 5;
+})
+$rightswitch.addEventListener('mouseup', () => {
+    paddle.speed = 0;
+})
+
+// タッチデバイスでのパドル操作用
+$leftswitch.addEventListener('touchstart', () => {
+    paddle.speed = -5;
+});
+$leftswitch.addEventListener('touchend', () => {
+    paddle.speed = 0;
+});
+
+$rightswitch.addEventListener('touchstart', () => {
+    paddle.speed = 5;
+})
+$rightswitch.addEventListener('touchend', () => {
+    paddle.speed = 0;
+})
 
 
 
