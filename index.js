@@ -91,8 +91,7 @@ const level = [
 // 初期画面に戻る処理
 const initScreen = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.setAttribute('style', 'background-color: #FFF');
-    $back.style.backgroundColor = '#FFF';
+    canvas.style.backgroundColor = '#FFF';
     $text.style.display = 'none';
     $button.style.display = 'block';
     $button.textContent = 'START';
@@ -205,7 +204,7 @@ const overGame = () => {
     canvas.style.backgroundColor = '#000';
     $text.style.display = 'block';
     $text.textContent = 'GAME OVER';
-    $text.style.color = '#FFF';
+    $text.style.color = '#F00';
     $button.style.display = 'block';
     $button.textContent = 'RETRY';
     $home.style.display = 'block';
@@ -255,7 +254,7 @@ document.addEventListener('keyup', () => {
 
 // クリックしたときの処理
 // ゲームスタート、リスタート処理
-$button.addEventListener('click', func = () => {
+$button.addEventListener('click', () => {
     startGame();
 });
 
@@ -292,6 +291,3 @@ $rightswitch.addEventListener('touchstart', () => {
 $rightswitch.addEventListener('touchend', () => {
     paddle.speed = 0;
 })
-
-
-
